@@ -8,6 +8,8 @@ class Board
   end
 
   def full?(column_index)
+    return true if column_index == -1
+
     grid[0][column_index] != default_value
   end
 
@@ -23,10 +25,10 @@ class Board
 
   def row_complete?(column_index, symbol)
     row = grid[depth(column_index)]
-    left_array = row[0..column_index]
+    left_array = row[0...column_index]
     right_array = row[column_index..]
     count = num_equal(left_array.reverse, symbol) + num_equal(right_array, symbol)
-    count >= 4
+    count == 4
   end
 
   def num_equal(array, symbol)
@@ -43,7 +45,7 @@ class Board
     column = grid.map { |row| row[column_index] }
     column = column[depth(column_index)..]
     count = num_equal(column, symbol)
-    count >= 4
+    count == 4
   end
 
   def diagonal_complete?(column_index, symbol)
@@ -54,13 +56,13 @@ class Board
     row_index = depth(column_index)
     left_array = increasing_side(row_index, column_index, 1)
     right_array = increasing_side(row_index, column_index, -1)
-    count = num_equal(left_array, symbol) + num_equal(right_array, symbol)
-    count >= 4
+    count = num_equal(left_array, symbol) + num_equal(right_array, symbol) + 1
+    count == 4
   end
 
   def increasing_side(row_index, column_index, increment_multiplier)
     array = []
-    increment = 0
+    increment = increment_multiplier
     while (0...grid.length).include?(row_index + increment) && (0...grid[0].length).include?(column_index - increment)
       array << grid[row_index + increment][column_index - increment]
       increment += 1 * increment_multiplier
@@ -72,18 +74,23 @@ class Board
     row_index = depth(column_index)
     left_array = decreasing_side(row_index, column_index, -1)
     right_array = decreasing_side(row_index, column_index, 1)
-    count = num_equal(left_array, symbol) + num_equal(right_array, symbol)
-    count >= 4
+    count = num_equal(left_array, symbol) + num_equal(right_array, symbol) + 1
+    count == 4
   end
 
   def decreasing_side(row_index, column_index, increment_multiplier)
     array = []
-    increment = 0
+    increment = increment_multiplier
     while (0...grid.length).include?(row_index + increment) && (0...grid[0].length).include?(column_index + increment)
       array << grid[row_index + increment][column_index + increment]
       increment += 1 * increment_multiplier
     end
     array
+  end
+
+  def update(column_index, symbol)
+    row_index = depth(column_index) - 1
+    grid[row_index][column_index] = symbol
   end
 
   private
