@@ -1,9 +1,10 @@
 class Player
   include Display
-  attr_reader :symbol
+  attr_reader :symbol, :name, :num
 
-  def initialize(player_num)
-    @player_num = player_num
+  def initialize(num)
+    @num = num
+    @name = assign_name
     @symbol = assign_symbol
   end
 
@@ -25,10 +26,17 @@ class Player
   end
 
   def to_s
-    "Player #{@player_num}"
+    name
   end
 
   def assign_symbol
-    @player_num == 1 ? BLACK_CIRCLE : WHITE_CIRCLE
+    symbol = num == 1 ? BLACK_CIRCLE : WHITE_CIRCLE
+    puts "#{name} your symbol is #{symbol}"
+    symbol
+  end
+
+  def assign_name
+    print "Player #{num} please enter your name: "
+    gets.chomp
   end
 end

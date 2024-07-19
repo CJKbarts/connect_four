@@ -33,8 +33,6 @@ module Display
       This is a two player game
       To win, a player must form a horizontal, vertical#{' '}
       or diagonal line of 4 of their own tokens
-      Player 1's token is the black circle (#{BLACK_CIRCLE})
-      Player 2's token is the white circle (#{WHITE_CIRCLE})
       Let the game begin!!
 
 

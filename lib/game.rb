@@ -4,12 +4,12 @@ class Game
 
   def initialize
     @board = Board.new
-    @player1 = Player.new(1)
-    @player2 = Player.new(2)
   end
 
   def play_round
     intro
+    @player1 = Player.new(1)
+    @player2 = Player.new(2)
     round_winner = winner
     board.display
     round_results(round_winner)
